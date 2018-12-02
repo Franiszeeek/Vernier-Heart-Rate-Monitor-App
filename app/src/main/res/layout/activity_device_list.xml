@@ -20,7 +20,7 @@
         android:id="@+id/btnSearchDevices"
         android:layout_width="355dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorButton"
         android:textColor="@color/colorTextBright"
         android:text="search for devices" />
 
@@ -35,7 +35,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorButton"
         android:textColor="@color/colorTextBright"
         android:text="Close Applications" />
 
