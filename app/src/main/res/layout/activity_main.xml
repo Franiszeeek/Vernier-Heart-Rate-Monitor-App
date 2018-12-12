@@ -14,11 +14,11 @@
         android:id="@+id/txtView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:text="Signal"
         android:textAlignment="center"
         android:textColor="@color/colorTextBright"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <com.jjoe64.graphview.GraphView
         android:id="@+id/graph1"
@@ -26,67 +26,83 @@
         android:layout_height="90dp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="384dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="242dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="Heart Rate: "
-            android:textAlignment="center"
+            android:text="Heart Rate"
+            android:textAlignment="textEnd"
             android:textColor="@color/colorTextBright"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txtView2"
-            android:layout_width="match_parent"
+            android:id="@+id/txtView"
+            android:layout_width="71dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="Value"
-            android:textAlignment="center"
-            android:textColor="@color/colorTextBright"
-            android:textSize="20sp" />
+            android:text="0"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorTextFlashy"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:text=" [bpm]"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textColor="@color/colorTextBright"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 
     <com.jjoe64.graphview.GraphView
         android:id="@+id/graph2"
-        android:layout_width="370dp"
-        android:layout_height="160dp" />
+        android:layout_width="match_parent"
+        android:layout_height="170dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="0dp"
+        android:text="Time [ms]"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextBright"
+        android:textSize="11sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="Histograph"
         android:textAlignment="center"
         android:textColor="@color/colorTextBright"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
 
     <com.jjoe64.graphview.GraphView
-        android:id="@+id/graph3"
-        android:layout_width="370dp"
-        android:layout_height="190dp" />
+            android:id="@+id/graph3"
+            android:layout_width="match_parent"
+            android:layout_height="180dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Heart rate [beat per minute]"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextBright"
+        android:textSize="11sp" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button"
         android:layout_width="370dp"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:layout_marginTop="5dp"
         android:backgroundTint="@color/colorButton"
         android:text="Disconnect"

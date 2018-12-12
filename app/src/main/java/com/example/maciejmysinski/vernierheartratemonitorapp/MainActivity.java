@@ -30,16 +30,13 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    @OnClick(R.id.button3)
+    @OnClick(R.id.button)
     void OnClick_F3() {
         Disconnect();
     }
 
-    @BindView(R.id.txtView1)
-    TextView txtView1;
-
-    @BindView(R.id.txtView2)
-    TextView txtView2;
+    @BindView(R.id.txtView)
+    TextView txtView;
 
     @BindView(R.id.graph1)
     GraphView graph1;
@@ -69,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
     private LineGraphSeries<DataPoint> lSeries;
     private PointsGraphSeries<DataPoint> pSeries;
-
     private BarGraphSeries<DataPoint> bSeries0;
     private BarGraphSeries<DataPoint> bSeries1;
     private BarGraphSeries<DataPoint> bSeries2;
@@ -97,25 +93,26 @@ public class MainActivity extends AppCompatActivity {
 
         final double[] signal = {0};
         final int[] bpm = {0};
-        final int[] tabHR = new int[200];
+        final int[] tabHR = new int[100];
         final int[] counter = {0};
-        final int[] hist = new int[18];
+        final int[] hist = new int[100];
 
         bluetoothIn = new Handler() {
             public void handleMessage(Message msg) {
                 String[] splitData;
                 if (msg.what == handlerState) {
                     String readMessage = (String) msg.obj;
-                    int endOfLineIndex = readMessage.indexOf("C");
+                    int endOfLineIndex = readMessage.indexOf("*");
                     if (endOfLineIndex > 0) {
                         String dataInPrint = readMessage.substring(0, endOfLineIndex);
-                        if (dataInPrint.charAt(0) == 'A')								//if it starts with # we know it is what we are looking for
+                        if (dataInPrint.charAt(0) == '#')
                         {
                             final String data = dataInPrint.substring(1, endOfLineIndex);
-                            splitData = data.split("B");
+                            splitData = data.split(":");
 
-                            if (Integer.parseInt(splitData[1]) != 0) {
-                                txtView2.setText(splitData[1]);
+                            if (Integer.parseInt(splitData[1]) >= 50 && Integer.parseInt(splitData[1]) <= 140) {
+                                txtView.setText(splitData[1]);
+
                                 if (counter[0] < 99){
                                     tabHR[counter[0]] = Integer.parseInt(splitData[1]);
 
@@ -165,16 +162,13 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                         }
                                     counter[0] += 1;
-
                                 }
                                 else {counter[0] = 0;
                                 }
                             }
-
                             bpm[0] = Integer.parseInt(splitData[1]);
                             signal[0] = Double.parseDouble(splitData[0]);
                         }
-
                     }
                 }
             }
@@ -184,36 +178,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 graphLastXValue += 1d;
-                lSeries.appendData(new DataPoint(graphLastXValue, signal[0]), true, 80);
+                lSeries.appendData(new DataPoint(graphLastXValue, signal[0]), true, 100);
+                pSeries.appendData(new DataPoint(graphLastXValue, bpm[0]), true, 2000);
 
-                //if (bpm[0] >= 50 && bpm[0] < 140) {
-                    pSeries.appendData(new DataPoint(graphLastXValue, bpm[0]), true, 2000);
-                //}
-
-                bSeries0.appendData(new DataPoint(1,hist[0]),true,1);
-                bSeries1.appendData(new DataPoint(2,hist[1]),true,1);
-                bSeries2.appendData(new DataPoint(3,hist[2]),true,1);
-                bSeries3.appendData(new DataPoint(4,hist[3]),true,1);
-                bSeries4.appendData(new DataPoint(5,hist[4]),true,1);
-                bSeries5.appendData(new DataPoint(6,hist[5]),true,1);
-                bSeries6.appendData(new DataPoint(7,hist[6]),true,1);
-                bSeries7.appendData(new DataPoint(8,hist[7]),true,1);
-                bSeries8.appendData(new DataPoint(9,hist[8]),true,1);
-                bSeries9.appendData(new DataPoint(10,hist[9]),true,1);
-                bSeries10.appendData(new DataPoint(11,hist[10]),true,1);
-                bSeries11.appendData(new DataPoint(12,hist[11]),true,1);
-                bSeries12.appendData(new DataPoint(13,hist[12]),true,1);
-                bSeries13.appendData(new DataPoint(14,hist[13]),true,1);
-                bSeries14.appendData(new DataPoint(15,hist[14]),true,1);
-                bSeries15.appendData(new DataPoint(16,hist[15]),true,1);
-                bSeries16.appendData(new DataPoint(17,hist[16]),true,1);
-                bSeries17.appendData(new DataPoint(18,hist[17]),true,1);
+                bSeries0.appendData(new DataPoint(1, hist[0]), true, 1);
+                bSeries1.appendData(new DataPoint(2, hist[1]), true, 1);
+                bSeries2.appendData(new DataPoint(3, hist[2]), true, 1);
+                bSeries3.appendData(new DataPoint(4, hist[3]), true, 1);
+                bSeries4.appendData(new DataPoint(5, hist[4]), true, 1);
+                bSeries5.appendData(new DataPoint(6, hist[5]), true, 1);
+                bSeries6.appendData(new DataPoint(7, hist[6]), true, 1);
+                bSeries7.appendData(new DataPoint(8, hist[7]), true, 1);
+                bSeries8.appendData(new DataPoint(9, hist[8]), true, 1);
+                bSeries9.appendData(new DataPoint(10, hist[9]), true, 1);
+                bSeries10.appendData(new DataPoint(11, hist[10]), true, 1);
+                bSeries11.appendData(new DataPoint(12, hist[11]), true, 1);
+                bSeries12.appendData(new DataPoint(13, hist[12]), true, 1);
+                bSeries13.appendData(new DataPoint(14, hist[13]), true, 1);
+                bSeries14.appendData(new DataPoint(15, hist[14]), true, 1);
+                bSeries15.appendData(new DataPoint(16, hist[15]), true, 1);
+                bSeries16.appendData(new DataPoint(17, hist[16]), true, 1);
+                bSeries17.appendData(new DataPoint(18, hist[17]), true, 1);
 
                 mHandler.postDelayed(this, 1);
-
             }
-
-
         };
 
         mHandler.postDelayed(mTimer, 1);
@@ -241,7 +229,8 @@ public class MainActivity extends AppCompatActivity {
         lSeries = new LineGraphSeries<>();
         lSeries.setDrawDataPoints(false);
         lSeries.setDrawBackground(false);
-        lSeries.setColor(Color.RED);
+        lSeries.setColor(Color.YELLOW);
+        graph.getGridLabelRenderer().setHighlightZeroLines(false);
 
         graph.addSeries(lSeries);
     }
@@ -250,27 +239,34 @@ public class MainActivity extends AppCompatActivity {
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMinX(0);
         graph.getViewport().setMaxX(2000);
-        graph.getViewport().setYAxisBoundsManual(false);
+        graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setMinY(50);
         graph.getViewport().setMaxY(140);
 
-        graph.getGridLabelRenderer().setLabelVerticalWidth(50);
-        graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
-        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.RED);
+        graph.getGridLabelRenderer().setLabelVerticalWidth(55);
+        //graph.getGridLabelRenderer().setLabelHorizontalHeight(55);
+
+        graph.getGridLabelRenderer().setHorizontalLabelsVisible(true);
         graph.getGridLabelRenderer().setGridColor(Color.RED);
+        graph.getGridLabelRenderer().setVerticalAxisTitle("Heart rate [bpm]");
+        graph.getGridLabelRenderer().setVerticalAxisTitleTextSize(21);
+
+        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.WHITE);
+        graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.WHITE);
+        graph.getGridLabelRenderer().setHorizontalAxisTitleColor(Color.WHITE);
+        graph.getGridLabelRenderer().setVerticalAxisTitleColor(Color.WHITE);
+        graph.getGridLabelRenderer().setHighlightZeroLines(false);
+
 
         pSeries = new PointsGraphSeries<>();
-        pSeries.setColor(Color.RED);
+        pSeries.setColor(Color.YELLOW);
         pSeries.setShape(PointsGraphSeries.Shape.POINT);
-        pSeries.setSize(5);
-        /*
+        pSeries.setSize(3);
+
         StaticLabelsFormatter staticLabelFormatter = new StaticLabelsFormatter(graph);
         staticLabelFormatter.setVerticalLabels(new String[]{"50","60","70","80",
                 "90","100","110","120","130","140"});
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelFormatter);
-        */
-        graph.getGridLabelRenderer().setHorizontalLabelsAngle(120);
-
         graph.addSeries(pSeries);
     }
 
@@ -313,23 +309,46 @@ public class MainActivity extends AppCompatActivity {
         bSeries17 = new BarGraphSeries<>();
         graph.addSeries(bSeries17);
 
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMinX(0);
-        graph.getViewport().setMaxX(18);
-        graph.getViewport().setYAxisBoundsManual(false);
-        graph.getViewport().setMinY(0);
-        graph.getViewport().setMaxY(60);
+        bSeries0.setColor(Color.YELLOW);
+        bSeries1.setColor(Color.YELLOW);
+        bSeries2.setColor(Color.YELLOW);
+        bSeries3.setColor(Color.YELLOW);
+        bSeries4.setColor(Color.YELLOW);
+        bSeries5.setColor(Color.YELLOW);
+        bSeries6.setColor(Color.YELLOW);
+        bSeries7.setColor(Color.YELLOW);
+        bSeries8.setColor(Color.YELLOW);
+        bSeries9.setColor(Color.YELLOW);
+        bSeries10.setColor(Color.YELLOW);
+        bSeries11.setColor(Color.YELLOW);
+        bSeries12.setColor(Color.YELLOW);
+        bSeries13.setColor(Color.YELLOW);
+        bSeries14.setColor(Color.YELLOW);
+        bSeries15.setColor(Color.YELLOW);
+        bSeries16.setColor(Color.YELLOW);
 
-        graph.getGridLabelRenderer().setLabelVerticalWidth(30);
-        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.RED);
-        graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.RED);
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMinX(-1);
+        graph.getViewport().setMaxX(19);
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxY(100);
+
+        graph.getGridLabelRenderer().setLabelVerticalWidth(50);
+        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.WHITE);
+        graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.WHITE);
         graph.getGridLabelRenderer().setGridColor(Color.RED);
 
         StaticLabelsFormatter staticLabelFormatter = new StaticLabelsFormatter(graph);
-        staticLabelFormatter.setHorizontalLabels(new String[]{"50","","60","","70","","80","",
-                "90","","100","","110","","120","","130","","140"});
+        staticLabelFormatter.setHorizontalLabels(new String[]{"","50","","60","","70","","80","",
+                "90","","100","","110","","120","","130","","140",""});
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelFormatter);
         graph.getGridLabelRenderer().setHorizontalLabelsAngle(120);
+        graph.getGridLabelRenderer().setVerticalAxisTitleColor(Color.WHITE);
+        graph.getGridLabelRenderer().setHighlightZeroLines(false);
+
+        graph.getGridLabelRenderer().setVerticalAxisTitle("Number of occurrences");
+        graph.getGridLabelRenderer().setVerticalAxisTitleTextSize(21);
     }
 
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
@@ -356,7 +375,8 @@ public class MainActivity extends AppCompatActivity {
             {
                 btSocket.close();
             } catch (IOException e2) {
-                Log.e(TAG, "Error", e2);            }
+                Log.e(TAG, "Error", e2);
+            }
         }
 
         mConnectedThread = new ConnectedThread(btSocket);
@@ -396,7 +416,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void run() {
-            byte[] buffer = new byte[256];
+            byte[] buffer = new byte[512];
             int bytes;
 
             while (true) {

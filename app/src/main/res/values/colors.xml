@@ -7,6 +7,7 @@
     <color name="colorButton">#9f3429</color>
     <color name="colorTextDark">#000000</color>
     <color name="colorTextBright">#ffffff</color>
+    <color name="colorTextFlashy">#ffe600</color>
     <color name="colorBackgroundDark">#000000</color>
     <color name="colorBackgroundBright">#ffffff</color>
 
